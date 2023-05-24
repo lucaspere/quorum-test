@@ -1,5 +1,5 @@
 import test from "ava";
-import { countLegSupporters } from "./index.js";
+import { compute_leg_sup_opp } from "./index.js";
 
 const dataset = {
   legislators: [
@@ -39,7 +39,7 @@ const dataset = {
 };
 
 test("should count legislator support", (t) => {
-  const result = countLegSupporters(dataset);
+  const result = compute_leg_sup_opp(dataset);
   const expected = [
     {
       id: "904789",
