@@ -2,6 +2,7 @@ import * as fs from "fs";
 import path from "path";
 import * as url from "url";
 import { load } from "csv-load-sync";
+import ObjectsToCsv from "objects-to-csv";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 
@@ -9,6 +10,7 @@ const YEA = "1";
 const NAY = "2";
 const DEFAULT_SPONSOR = "Unknown";
 const DATA_DIR = path.resolve(__dirname, "./data");
+const RESULTS_DIR = path.resolve(__dirname, "./results");
 
 export const compute_leg_sup_opp = (dataset) => {
   const result = dataset.legislators.map((legislator) => {
@@ -69,8 +71,20 @@ const createDataset = (files) => {
 
   return dataset;
 };
+const saveResultsToCSV = async (results, dir) => {
+  for (const [fileName, result] of results.entries()) {
+    const csv = new ObjectsToCsv(result);
+    await csv.toDisk(`${dir}/${fileName}`);
+  }
+};
+
 const files = fs.readdirSync(DATA_DIR);
 const dataset = createDataset(files);
+const results = new Map([
+  ["legislators-support-oppose-count.csv", compute_leg_sup_opp(dataset)],
+  ["bills.csv", compute_bill_sup_opp(dataset)],
+]);
 
-console.log(compute_leg_sup_opp(dataset));
-console.log(compute_bill_sup_opp(dataset));
+saveResultsToCSV(results, RESULTS_DIR).then(() => {
+  console.log("Results written to files successfully 🙂");
+});
