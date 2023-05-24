@@ -38,7 +38,7 @@ const dataset = {
   ],
 };
 
-test("should count legislator support", (t) => {
+test("should compute legislator support and oppose", (t) => {
   const result = compute_leg_sup_opp(dataset);
   const expected = [
     {
