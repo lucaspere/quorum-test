@@ -22,3 +22,8 @@ export const compute_leg_sup_opp = (dataset) => {
 
   return result;
 };
+
+export const compute_bill_sup_opp = (dataset) => {
+  const result = {};
+  return result;
+};
