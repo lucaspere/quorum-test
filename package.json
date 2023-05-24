@@ -13,5 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "ava": "^5.2.0"
+  },
+  "dependencies": {
+    "csv-load-sync": "^2.3.1"
   }
 }
